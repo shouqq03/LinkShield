@@ -70,16 +70,22 @@
             text-decoration: underline;
         }
         @media (max-width: 768px) {
-    .container, .card, table {
-        width: 95%;
-        max-width: 100%;
-        margin: auto;
+    body {
+        padding: 15px;
+    }
+
+    .container, .card {
+        width: 95% !important;
+        max-width: 95% !important;
+        margin: 20px auto !important;
+        padding: 15px !important;
     }
 
     table {
-        font-size: 12px;
-        overflow-x: auto;
+        width: 100% !important;
         display: block;
+        overflow-x: auto;
+        font-size: 12px;
     }
 
     th, td {
@@ -88,7 +94,7 @@
     }
 
     h1 {
-        font-size: 26px;
+        font-size: 24px;
     }
 }
     </style>
