@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <title>Admin Dashboard | LinkShield</title>
   <style>
@@ -27,6 +28,44 @@
     .input{background:#0d1117;border:1px solid #30363d;color:#e1e8f0;border-radius:10px;padding:10px 12px;min-width:220px}
     a{color:#4f94ff;text-decoration:none}
     a:hover{text-decoration:underline}
+    @media (max-width: 768px) {
+
+    body {
+        padding: 15px;
+    }
+
+    .container,
+    .admin-container,
+    .card {
+        width: 95% !important;
+        max-width: 95% !important;
+        margin: 20px auto !important;
+        padding: 15px !important;
+    }
+
+    table {
+        width: 100% !important;
+        display: block;
+        overflow-x: auto;
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 8px;
+        white-space: nowrap;
+    }
+
+    input,
+    button,
+    select {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
   </style>
 </head>
 <body>
