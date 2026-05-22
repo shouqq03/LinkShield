@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>Session History | LinkShield</title>
     <style>
@@ -68,6 +69,28 @@
         .back-link:hover {
             text-decoration: underline;
         }
+        @media (max-width: 768px) {
+    .container, .card, table {
+        width: 95%;
+        max-width: 100%;
+        margin: auto;
+    }
+
+    table {
+        font-size: 12px;
+        overflow-x: auto;
+        display: block;
+    }
+
+    th, td {
+        padding: 8px;
+        white-space: nowrap;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+}
     </style>
 </head>
 <body>
