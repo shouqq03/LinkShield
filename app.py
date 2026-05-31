@@ -203,7 +203,7 @@ def admin_dashboard():
     safe_count = ScanRecord.query.filter_by(result='SAFE').count()
     malicious_count = ScanRecord.query.filter_by(result='MALICIOUS').count()
 
-    accuracy = app.config.get('MODEL_ACCURACY', 98.75)
+    accuracy = app.config.get('MODEL_ACCURACY', 91.48)
     error_rate = round(100 - float(accuracy), 2)
 
     filter_value = request.args.get('filter', 'ALL')
