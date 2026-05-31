@@ -34,7 +34,7 @@ app.secret_key = "secret_key_for_session"
 app.config['ADMIN_USERNAME'] = 'admin'
 app.config['ADMIN_PASSWORD'] = '1234'
 
-app.config['MODEL_ACCURACY'] = 98.75
+app.config['MODEL_ACCURACY'] = 91.48
 
 # --- Database ---
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
