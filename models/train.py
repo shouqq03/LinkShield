@@ -1,18 +1,19 @@
 import pandas as pd
 import joblib, os, sys
-import numpy as np
 import re
+
 from urllib.parse import urlparse
+
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.pipeline import Pipeline
- 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from analyze import extract_features, FEATURE_NAMES
  
-# ─── URL Cleaning ─────────────────────────────────────────────────
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+ 
+#  URL Cleaning
 def clean_url(url):
     if pd.isna(url): return None
     url = str(url).strip().lower()
@@ -36,7 +37,7 @@ def clean_url(url):
     except:
         return None
  
-# ─── Load Dataset ─────────────────────────────────────────────────
+# Load Dataset 
 DATASET_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'phishing_site_urls.csv')
  
 print("📂 Loading dataset...")
@@ -50,12 +51,12 @@ df_bad  = df[df["Label"] == 1].copy()
  
 print(f"✅ Safe: {len(df_good):,} | Malicious: {len(df_bad):,}")
  
-# ─── Undersample Safe Class to Balance Dataset ────────────────────
+# Undersample Safe Class to Balance Dataset
 TARGET_GOOD = min(350000, len(df_good))
 df_good = df_good.sample(n=TARGET_GOOD, random_state=42)
 print(f"⚖️  After balancing - Safe: {len(df_good):,} | Malicious: {len(df_bad):,}")
  
-# ─── Clean URLs ───────────────────────────────────────────────────
+# Clean URLs 
 df_good["clean_url"] = df_good["URL"].apply(clean_url)
 df_bad["clean_url"]  = df_bad["URL"].apply(clean_url)
  
@@ -64,7 +65,7 @@ df_bad  = df_bad[df_bad["clean_url"].notna()].reset_index(drop=True)
  
 print(f"✅ After cleaning - Safe: {len(df_good):,} | Malicious: {len(df_bad):,}")
  
-# ─── Feature Extraction ───────────────────────────────────────────
+# ─── Feature Extraction 
 print("⚙️  Extracting features...")
  
 good_features = []
@@ -97,9 +98,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
  
 # ─── Train Model with Pipeline + StandardScaler ───────────────────
-print("🤖 Training model...")
+print(" Training model...")
 pipeline = Pipeline([
-    ('scaler', StandardScaler()),
     ('classifier', RandomForestClassifier(
         n_estimators=100,
         max_depth=15,
@@ -115,8 +115,8 @@ pipeline = Pipeline([
 pipeline.fit(X_train, y_train)
  
 # ─── Evaluate Model ───────────────────────────────────────────────
-print(f"\n📈 Train Accuracy: {pipeline.score(X_train, y_train)*100:.2f}%")
-print(f"📈 Test Accuracy:  {pipeline.score(X_test, y_test)*100:.2f}%")
+print(f"\n Train Accuracy: {pipeline.score(X_train, y_train)*100:.2f}%")
+print(f" Test Accuracy:  {pipeline.score(X_test, y_test)*100:.2f}%")
  
 y_pred = pipeline.predict(X_test)
 print(f"\n{classification_report(y_test, y_pred, target_names=['SAFE', 'MALICIOUS'])}")
@@ -128,14 +128,7 @@ print(f"  Safe → Safe:       {cm[0][0]:,}")
 print(f"  Safe → Malicious:  {cm[0][1]:,}")
 print(f"  Malicious → Safe:  {cm[1][0]:,}  ← Risk")
 print(f"  Malicious → Malicious: {cm[1][1]:,}  ← Correct")
- 
-# ─── Cross Validation ─────────────────────────────────────────────
-#print("\n🔄 Running Cross Validation...")
-#cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-#cv_scores = cross_val_score(pipeline, X, y, cv=cv, scoring='accuracy')
-#print(f"CV Scores: {cv_scores.round(4)}")
-#print(f"Mean CV:   {cv_scores.mean():.4f} (+/- {cv_scores.std():.4f})")
- 
+
 # ─── Top Features ─────────────────────────────────────────────────
 feature_names = [f for f in FEATURE_NAMES if f != "result"]
 importances = pd.Series(

@@ -31,8 +31,8 @@ app = Flask(__name__)
 app.secret_key = "secret_key_for_session"
 
 # --- Admin Login ---
-app.config['ADMIN_USERNAME'] = 'admin'
-app.config['ADMIN_PASSWORD'] = '1234'
+app.config['ADMIN_USERNAME'] = 'Admin'
+app.config['ADMIN_PASSWORD'] = 'Linkshield2026'
 
 app.config['MODEL_ACCURACY'] = 91.48
 
@@ -222,7 +222,8 @@ def admin_dashboard():
         malicious_count=malicious_count,
         accuracy=accuracy,
         error_rate=error_rate,
-        latest=latest
+        latest=latest,
+        filter=filter_value
     )
 
 if __name__ == '__main__':

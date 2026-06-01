@@ -4,15 +4,15 @@ from urllib.parse import urlparse
  
 RISKY_TLDS = [
     ".xyz", ".ru", ".tk", ".ml", ".ga",
-    ".cf", ".gq", ".top", ".work", ".click"
+    ".cf", ".gq", ".top", ".work", ".click",
 ]
  
 TRUSTED_TLDS = [
     ".gov", ".edu", ".gov.sa", ".edu.sa",
     ".gov.uk", ".ac.uk", ".gov.au"
 ]
- 
-def shannon_entropy(text):
+
+def shannon_entropy(text): 
     if not text:
         return 0
     prob = [float(text.count(c)) / len(text) for c in dict.fromkeys(list(text))]
